@@ -1,23 +1,29 @@
 version: '2'
 services:
     postgis:
-        image: relin/postgis
+        build: Dockerfiles/postgis/
+        hostname: postgis
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./postgres_data:/var/lib/postgresql
     merkator:
         build: .
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
-            - .:/code
+            - .:/code/merkator
         ports:
             - "8000:8000"
         depends_on:
             - postgis
+            - redis
     nginx:
         image: nginx:latest
         ports:
             - "80:80"
         links:
-            - merkator
             - postgis
+            - merkator
         volumes:
             - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
         volumes_from:
