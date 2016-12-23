@@ -85,3 +85,6 @@ merkator/media/*
 
 # postgres_data
 postgres_data/*
+
+# nginx-default.conf
+nginx-default.conf/*
