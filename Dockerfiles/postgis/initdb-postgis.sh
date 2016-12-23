@@ -1,6 +1,5 @@
 #!/bin/sh
 POSTGRES="gosu postgres"
-
 #$POSTGRES pg_ctl -w start
 $POSTGRES psql  -c "CREATE ROLE merkator ENCRYPTED PASSWORD 'merkator' LOGIN;"
 $POSTGRES psql  -c 'CREATE DATABASE merkator OWNER merkator ;'
