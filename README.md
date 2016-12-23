@@ -19,5 +19,5 @@ You can try to relunch with the previous command or open a new terminal and use 
 In that case Postgis will be launched separately.
 
 
-To dev with docker `docker exec -ti CONTAINER_ID bash`
+To dev with docker `docker exec -ti CONTAINER_ID bash`   
 Don't forget to makemigrations / migrate
