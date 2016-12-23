@@ -82,3 +82,6 @@ merkator/components/bower_components/*
 
 # media file
 merkator/media/*
+
+# postgres_data
+postgres_data/*
