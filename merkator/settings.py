@@ -30,14 +30,31 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+SIGNALISATION_APPS = [
+    'merkator.spot',
+    #'merkator.map',
+    #'merkator.administration',
+    'merkator',
+]
+
 INSTALLED_APPS = [
+    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+    'django.contrib.gis',
+    'bootstrap3',
+    'fontawesome',
+    'djangobower',
+    'compressor',
+    'leaflet',
+    'dal',
+    'dal_select2',
+    'modeltranslation',
+] + SIGNALISATION_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -45,6 +62,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -106,7 +124,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
+
+LANGUAGES = (
+    ('fr', 'Français'),
+    ('nl', 'Nederlands'),
+    ('en', 'English'),
+)
 
 TIME_ZONE = 'UTC'
 
@@ -117,7 +141,81 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Role
+
+USER_ROLES = (
+    'guest',            #only viewing data
+    'worker',           #create and manage data
+    'manager',          #create and manage data + managing user
+)
+
+DEFAULTROLE = 'guest'
+
+ROLES_HERITAGE = {
+    'manager' : ('worker', 'guest', ),
+    'worker' : ('guest', ),
+    'guest' : (),
+}
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
+MEDIA_ROOT = 'media'
+MEDIA_URL = '/media/'
+
+
+# Bower
+
+BOWER_INSTALLED_APPS = (
+    'jquery',
+    'jquery-ui',
+    'bootstrap',
+    'modernizr',
+    'underscore',
+    'nvd3',
+    'leaflet.markercluster',
+    'leaflet.locatecontrol',
+    'fuse',
+    'leaflet-pip',
+    'twitter-bootstrap-wizard#1.3.2',
+    'eonasdan-bootstrap-datetimepicker#latest',
+    'typeahead.js',
+    'bloodhound',
+    'proj4',
+)
+
+
+# Leaflet
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (50.8676041, 4.3737121),
+    'DEFAULT_ZOOM': 13,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 20,
+    'PLUGINS': {
+        'markercluster': {
+            'css': ['leaflet.markercluster/dist/MarkerCluster.css','leaflet.markercluster/dist/MarkerCluster.Default.css'],
+            'js': 'leaflet.markercluster/dist/leaflet.markercluster.js',
+            'auto-include': False,
+        },
+        'leaflet-pip' :{
+            'js' : ['leaflet-pip/leaflet-pip.js'],
+            'auto-include': False,
+        },
+        'locatecontrol' :{
+            'css': ['font-awesome/css/font-awesome.min.css','leaflet.locatecontrol/dist/L.Control.Locate.min.css'],
+            'js' : ['leaflet.locatecontrol/dist/L.Control.Locate.min.js'],
+            'auto-include': False,
+        }
+    }
+}
+
+
+# Local Settings
+
+APP_INFO = {
+    'name': 'Merkator'
+}
